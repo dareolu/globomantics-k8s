@@ -1,0 +1,17 @@
+[management]
+
+[lb:children]
+haproxy
+nginx
+
+[haproxy]
+
+[nginx]
+
+[k8s:children]
+master
+worker
+
+[master]
+
+[worker]
