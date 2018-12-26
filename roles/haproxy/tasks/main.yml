@@ -1,0 +1,4 @@
+---
+# tasks file for haproxy
+- name: Download and Configure haproxy.
+  include: configure-haproxy.yml

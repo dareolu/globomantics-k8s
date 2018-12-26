@@ -1,0 +1,16 @@
+---
+  - name: Haproxy > install haproxy
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+     - "{{ haproxy_packages }}"
+
+  - name: Haproxy > configure haproxy
+    template:
+      src: 'haproxy.cfg.j2'
+      dest: '/etc/haproxy/haproxy.cfg'
+      mode: 0644
+      owner: root
+      group: root
+    notify: restart_haproxy

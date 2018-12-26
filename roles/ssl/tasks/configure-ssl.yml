@@ -2,8 +2,19 @@
   - name: SSL > Download Cloudflare SSL packages
     get_url:
       url: "{{ item }}"
-      dest: "{{ base_opt }}/ssl/"
-      mode: 0740
+      dest: "{{ download_dir }}/"
+      mode: 0777
     with_items:
       - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
       - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+
+  - name: SSL > Move cfssl to /usr/local/bin
+    copy:
+      src: "{{ download_dir }}/{{ item.src }}"
+      dest: "/usr/local/bin/{{ item.dest }}"
+      owner: root
+      group: root
+      mode: 0777
+    with_items:
+      - { src: cfssl_linux-amd64, dest: cfssl }
+      - { src: cfssljson_linux-amd64, dest: cfssljson }

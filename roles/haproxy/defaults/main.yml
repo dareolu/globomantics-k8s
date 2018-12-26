@@ -1,0 +1,10 @@
+---
+# defaults file for haproxy
+
+kubernetes_masters:
+  - master_name: 'default-k8s-master-1'
+    master_ip: "{{ groups['k8smaster'][0]}}"
+  - master_name: 'defuault-k8s-master-2'
+    master_ip: "{{ groups['k8smaster'][1]}}"
+  - master_name: 'default-k8s-master-3'
+    master_ip: "{{ groups['k8smaster'][2]}}"
