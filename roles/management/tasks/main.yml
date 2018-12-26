@@ -1,2 +1,4 @@
 ---
 # tasks file for management
+- name: Configure Cloudflare SSL.
+  include: configure-ssl.yml

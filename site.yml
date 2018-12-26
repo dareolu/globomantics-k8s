@@ -1,0 +1,11 @@
+---
+
+- hosts: management
+  become: yes
+  roles:
+   - common
+
+- hosts: management
+  become: yes
+  roles:
+   - management

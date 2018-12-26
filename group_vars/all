@@ -1,0 +1,6 @@
+# Common directories
+base_opt: '/opt'
+
+# Infrastructure PErmissions
+infra_user: 'root'
+infra_group: 'root'

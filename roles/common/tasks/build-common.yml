@@ -1,0 +1,11 @@
+---
+  - name: Common > Create directories for the infrastructure
+    file:
+      path: "{{ item }}"
+      owner: "{{ infra_user }}"
+      group: "{{ infra_group }}"
+      state: directory
+      mode: 0777
+    with_items:
+      - "{{ base_opt }}"
+      - "{{ base_opt }}/ssl"

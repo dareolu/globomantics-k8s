@@ -1,0 +1,9 @@
+---
+  - name: SSL > Download Cloudflare SSL packages
+    get_url:
+      url: "{{ item }}"
+      dest: "{{ base_opt }}/ssl/"
+      mode: 0740
+    with_items:
+      - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+      - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
