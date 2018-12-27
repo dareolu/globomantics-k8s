@@ -8,6 +8,6 @@
 - hosts: management
   become: yes
   roles:
-   # - ssl
+   - ssl
    # - kubectl
-   - haproxy
+   # - haproxy

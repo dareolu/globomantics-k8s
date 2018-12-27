@@ -1,0 +1,8 @@
+---
+  - name: NFS > install NFS
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+     - "{{ nfs_packages.server }}"
+     when: environment_requires_nfs_server

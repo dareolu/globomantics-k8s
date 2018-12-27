@@ -1,0 +1,4 @@
+---
+# tasks file for nfs
+  - name: Download and Configure nfs.
+    include: configure-nfs.yml

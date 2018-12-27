@@ -4,8 +4,3 @@
     service:
       name: haproxy
       state: restarted
-
-# - name: restart_haproxy
-#   service:
-#     name: ntpd
-#     state: restarted

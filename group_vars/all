@@ -1,6 +1,7 @@
 # Common directories
-base_opt: '/opt'
+base_opt: "/opt"
 download_dir: "{{ base_opt }}/downloads"
+cfssl_dir: "/etc/ssl/cfssl"
 
 # Infrastructure Permissions
 infra_user: 'root'

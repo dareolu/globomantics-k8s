@@ -9,6 +9,7 @@
     with_items:
       - "{{ base_opt }}"
       - "{{ download_dir }}"
+      - "{{ cfssl_dir }}"
 
   - name: update host files
     template:
