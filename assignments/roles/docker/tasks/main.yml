@@ -1,0 +1,4 @@
+---
+# tasks file for docker
+  - name: Configure Docker.
+    include: configure-docker.yml

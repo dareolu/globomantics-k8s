@@ -51,7 +51,7 @@
       - {src: etcd-k8s-csr.json.j2, dest: etcd-k8s-csr.json}
 
 
-  - name:  Generate the certificate and private key for the ETCD Cluster .
+  - name: SSL > Generate the certificate and private key for the ETCD Cluster .
     shell: |
             cfssl gencert \
             -ca=ca.pem \
@@ -59,7 +59,17 @@
             -config=ca-config.json \
             -hostname={{ groups['k8smaster'][0]}},{{ groups['k8smaster'][1]}},{{ groups['k8smaster'][2]}},{{ groups['management'][0]}},127.0.0.1,kubernetes.default \
             -profile=kubernetes etcd-k8s-csr.json | \
-            cfssljson -bare kubernetes && touch  etcd_cert_and_private_key_created
+            cfssljson -bare kubernetes && touch  etcd_cert_and_private_key_created && chmod -R 0640  "{{ cfssl_dir }}"
     args:
       chdir: "{{ cfssl_dir }}"
       creates: etcd_cert_and_private_key_created
+
+  - name: SSL > Move the certificates to shared directory
+    copy:
+      src: "{{ item }}"
+      dest: "{{ nfs_dir }}/"
+      owner: root
+      group: root
+      mode: 0644
+    with_fileglob:
+      -  "{{ cfssl_dir }}/*.pem"

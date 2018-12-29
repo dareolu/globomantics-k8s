@@ -3,12 +3,17 @@
   - hosts: all
     become: yes
     roles:
-     # - common
+     - common
      - nfs
 
-  # - hosts: management
-  #   become: yes
-  #   roles:
-  #    - ssl
-     # - kubectl
-     # - haproxy
+  - hosts: management
+    become: yes
+    roles:
+     - ssl
+     - kubectl
+     - haproxy
+
+  - hosts: all
+    become: yes
+    roles:
+     - docker

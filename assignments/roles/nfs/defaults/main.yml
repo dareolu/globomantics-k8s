@@ -1,6 +1,6 @@
 ---
 # defaults file for nfs
-nfs_dir: "/var/nfs/general"
+
 
 nfs_packages:
   server:
