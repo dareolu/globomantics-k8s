@@ -1,0 +1,14 @@
+---
+
+  - hosts: all
+    become: yes
+    roles:
+     # - common
+     - nfs
+
+  # - hosts: management
+  #   become: yes
+  #   roles:
+  #    - ssl
+     # - kubectl
+     # - haproxy

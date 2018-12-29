@@ -3,25 +3,26 @@ base_opt: "/opt"
 download_dir: "{{ base_opt }}/downloads"
 cfssl_dir: "/etc/ssl/cfssl"
 
+
 # Infrastructure Permissions
 infra_user: 'root'
 infra_group: 'root'
 
 #Infrastructure > Server names and IP
-master_base_name: 'hmrc-master-node'
-worker_base_name: 'hmrc-worker-node'
+master_base_name: 'hmrc-masternode'
+worker_base_name: 'hmrc-workernode'
 infra_domain: 'globomantic'
 kubernetes_masters:
-  - master_name: "k8s-{{ master_base_name }}-1"
+  - master_name: "k8s-{{ master_base_name }}1"
     master_ip: "{{ groups['k8smaster'][0]}}"
-  - master_name: "k8s-{{ master_base_name }}-2"
+  - master_name: "k8s-{{ master_base_name }}2"
     master_ip: "{{ groups['k8smaster'][1]}}"
-  - master_name: "k8s-{{ master_base_name }}-3"
+  - master_name: "k8s-{{ master_base_name }}3"
     master_ip: "{{ groups['k8smaster'][2]}}"
 kubernetes_workers:
-  - worker_name: "k8s-{{ worker_base_name }}-1"
+  - worker_name: "k8s-{{ worker_base_name }}1"
     worker_ip: "{{ groups['k8sworker'][2]}}"
-  - worker_name: "k8s-{{ worker_base_name }}-2"
+  - worker_name: "k8s-{{ worker_base_name }}2"
     worker_ip: "{{ groups['k8sworker'][2]}}"
-  - worker_name: "k8s-{{ worker_base_name }}-3"
+  - worker_name: "k8s-{{ worker_base_name }}3"
     worker_ip: "{{ groups['k8sworker'][2]}}"

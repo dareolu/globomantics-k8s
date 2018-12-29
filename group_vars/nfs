@@ -1,5 +1,0 @@
-nfs_packages:
-  - server:
-    - nfs-kernel-server
-  - client:
-    - nfs-common

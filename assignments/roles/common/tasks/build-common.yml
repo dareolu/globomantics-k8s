@@ -1,4 +1,9 @@
 ---
+
+  - name: Common > Update the APT repository
+    apt:
+      update_cache: yes
+
   - name: Common > Create directories for the infrastructure
     file:
       path: "{{ item }}"
@@ -11,7 +16,7 @@
       - "{{ download_dir }}"
       - "{{ cfssl_dir }}"
 
-  - name: update host files
+  - name:  Common > update host files
     template:
       src: 'hosts.j2'
       dest: '/etc/hosts'

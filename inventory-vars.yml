@@ -1,0 +1,13 @@
+---
+  - name: Set inventory name when using static inventory
+    set_fact:
+      globomantics_inventory_file: "{{ inventory_file }}"
+    when: inventory_file is not none
+
+  - name: Set inventory name when using dynamic inventory
+    set_fact:
+      globomantics_inventory_file: "{{ inventory_dir | regex_replace('\\.d$', '') }}"
+    when: inventory_file is none
+
+  - name: env_vars collection
+    include: env-vars.yml

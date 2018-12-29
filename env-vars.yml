@@ -1,0 +1,22 @@
+---
+  - name: Collate variables from environment specific file
+    include_vars: "{{ item }}"
+    with_first_found:
+      - files:
+        - "{{ playbook_dir }}/env_vars/{{ globomantics_inventory_file | basename }}.yml"
+        skip: true
+
+  - name: Check if env_vars file exists without .yml extension
+    fail:
+      msg: "{{ item }} doesn't have a .yml extension"
+    with_first_found:
+      - files:
+        - "{{ playbook_dir }}/env_vars/{{ globomantics_inventory_file | basename }}"
+        skip: true
+
+  - name: Collate variables from environment specific vault file
+    include_vars: "{{ item }}"
+    with_first_found:
+      - files:
+        - "{{ playbook_dir }}/env_vars/{{ globomantics_inventory_file | basename }}.vault.yml"
+        skip: true

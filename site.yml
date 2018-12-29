@@ -1,13 +1,12 @@
----
+- name: Infrastructure environment variables
+  hosts: all
+  tasks:
+    - include: inventory-vars.yml
+  tags:
+    - env_vars
 
-- hosts: management
-  become: yes
-  roles:
-   - common
 
-- hosts: management
-  become: yes
-  roles:
-   - ssl
-   # - kubectl
-   # - haproxy
+- name: Infrastructure Playbook
+  import_playbook: assignments/all.yml
+  tags:
+    - playbooks

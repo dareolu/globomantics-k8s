@@ -1,0 +1,9 @@
+---
+# defaults file for nfs
+nfs_dir: "/var/nfs/general"
+
+nfs_packages:
+  server:
+    - nfs-kernel-server
+  client:
+    - nfs-common
