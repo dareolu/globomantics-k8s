@@ -34,37 +34,20 @@
       mode: 0644
       owner: root
       group: root
+    when: environment_requires_nfs_server and 'management' in group_names
 
   - name: NFS > execute exportfs
     shell: exportfs -a
     when: environment_requires_nfs_server and 'management' in group_names
-  # - name: Mount NFS
-  #   mount:
-  #     path: /var/nfs/general
-  #     src: "{{ groups['management'][0]}}:/var/nfs/general"
-  #     fstype: ext4
-  #     opts: rw,noauto
-  #     state: present
-  #   when: environment_requires_nfs_server and 'management' not in group_names
-  # {{hostvars[groups['nfs_server'][0]]['ansible_eth0']['ipv4']['address']}}:/share
 
   - name: NFS > set mountpoints
     mount:
       name: /var/nfs/general
       src: k8s-hmrc-management:/var/nfs/general
-      # src: "{{[groups['management'][0]]}}:/var/nfs/general"
       fstype: nfs
-      # opts: defaults,nobootwait
-      # dump: 0
-      # passno: 2
+      opts: rw
       state: mounted
     when: environment_requires_nfs_server and 'management' not in group_names
-
-# mount: 
-#   fstype: nfs
-#   name: /mnt/nfsmount
-#   src: '127.0.0.1:/mnt/nfsexport'
-#   state: mounted
 
 # sudo mount 192.168.2.11:/var/nfs/general /var/nfs/general
 # showmount -e 192.168.2.11
