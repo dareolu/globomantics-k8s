@@ -10,7 +10,7 @@
     become: yes
     roles:
      - ssl
-     - kubectl
+     - kube-stack
      - haproxy
 
   - hosts: all

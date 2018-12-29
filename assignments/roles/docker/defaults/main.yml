@@ -1,2 +1,4 @@
 ---
 # defaults file for docker
+docker_version: "18.06.0"
+docker_linux_distribution: "ubuntu"

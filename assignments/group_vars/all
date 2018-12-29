@@ -3,6 +3,7 @@ base_opt: "/opt"
 download_dir: "{{ base_opt }}/downloads"
 cfssl_dir: "/etc/ssl/cfssl"
 nfs_dir: "/var/nfs/general"
+etcd_dir: "/etc/etcd"
 
 # Infrastructure Permissions
 infra_user: 'root'
