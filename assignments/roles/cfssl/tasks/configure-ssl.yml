@@ -1,24 +1,32 @@
 ---
-  # - name: SSL > Download Cloudflare SSL packages
-  #   get_url:
-  #     url: "{{ item }}"
-  #     dest: "{{ download_dir }}/"
-  #     mode: 0777
-  #     force: no
-  #   with_items:
-  #     - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-  #     - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
 
-  # - name: SSL > Move cfssl to /usr/local/bin
-  #   copy:
-  #     src: "{{ download_dir }}/{{ item.src }}"
-  #     dest: "/usr/local/bin/{{ item.dest }}"
-  #     owner: root
-  #     group: root
-  #     mode: 0777
-  #   with_items:
-  #     - { src: cfssl_linux-amd64, dest: cfssl }
-  #     - { src: cfssljson_linux-amd64, dest: cfssljson }
+  - name: SSL > check if we need to download CFSSL Packages
+    stat:
+      path: "{{ download_dir }}/cfssl_linux-amd64"
+    register: cfssl_pakages_download
+
+  - name: SSL > Download Cloudflare SSL packages
+    get_url:
+      url: "{{ item }}"
+      dest: "{{ download_dir }}/"
+      mode: 0777
+      force: no
+    with_items:
+      - https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+      - https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+    when: cfssl_pakages_download.stat.islnk is not defined
+
+  - name: SSL > Move cfssl to /usr/local/bin
+    copy:
+      src: "{{ download_dir }}/{{ item.src }}"
+      dest: "/usr/local/bin/{{ item.dest }}"
+      owner: root
+      group: root
+      mode: 0777
+    with_items:
+      - { src: cfssl_linux-amd64, dest: cfssl }
+      - { src: cfssljson_linux-amd64, dest: cfssljson }
+    when: cfssl_pakages_download.stat.islnk is not defined
 
 
   - name: SSL > Prepare Certificate Authority | And CSR configuration files
@@ -59,7 +67,7 @@
             -config=ca-config.json \
             -hostname={{ groups['k8smaster'][0]}},{{ groups['k8smaster'][1]}},{{ groups['k8smaster'][2]}},{{ groups['management'][0]}},127.0.0.1,kubernetes.default \
             -profile=kubernetes etcd-k8s-csr.json | \
-            cfssljson -bare kubernetes && touch  etcd_cert_and_private_key_created && chmod -R 0640  "{{ cfssl_dir }}"
+            cfssljson -bare kubernetes && touch  etcd_cert_and_private_key_created && chmod -R 0777  "{{ cfssl_dir }}"
     args:
       chdir: "{{ cfssl_dir }}"
       creates: etcd_cert_and_private_key_created

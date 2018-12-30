@@ -1,2 +1,4 @@
 ---
 # tasks file for etcd
+  - name: ETCD > Configure ETCD Cluster
+    include: configure-etcd.yml

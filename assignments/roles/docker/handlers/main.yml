@@ -1,2 +1,6 @@
 ---
 # handlers file for docker
+- name: restart_etcd
+  service:
+    name: etcd
+    state: restarted

@@ -9,11 +9,16 @@
   - hosts: management
     become: yes
     roles:
-     - ssl
-     - kube-stack
+     - cfssl
      - haproxy
 
   - hosts: all
     become: yes
     roles:
      - docker
+
+  - hosts: k8smaster
+    become: yes
+    roles:
+      - kube-stack
+      - etcd

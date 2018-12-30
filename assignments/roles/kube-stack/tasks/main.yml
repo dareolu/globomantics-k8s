@@ -1,4 +1,5 @@
 ---
 # tasks file for management
-- name: Download and Configure kubectl.
-  include: kubectl.yml
+
+- name: Download and Configure kubernetes stack.
+  include: k8s-stack.yml

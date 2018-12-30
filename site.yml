@@ -1,9 +1,9 @@
-- name: Infrastructure environment variables
-  hosts: all
-  tasks:
-    - include: inventory-vars.yml
-  tags:
-    - env_vars
+# - name: Infrastructure environment variables
+#   hosts: all
+#   tasks:
+#     - include: inventory-vars.yml
+#   tags:
+#     - env_vars
 
 
 - name: Infrastructure Playbook

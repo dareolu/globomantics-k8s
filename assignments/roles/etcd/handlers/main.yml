@@ -1,2 +1,8 @@
 ---
 # handlers file for etcd
+- name: start_up_etcd
+  service:
+    name: etcd
+    state: started
+    daemon_reload: yes
+    enabled: yes
