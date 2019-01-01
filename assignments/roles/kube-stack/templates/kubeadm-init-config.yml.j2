@@ -4,9 +4,9 @@ api:
   advertiseAddress: {{ hostvars[inventory_hostname]['ansible_enp0s8']['ipv4']['address']}}
 etcd:
   endpoints:
-  - https://{{ groups['k8smaster'][0]}}:2379
-  - https://{{ groups['k8smaster'][1]}}:2379
-  - https://{{ groups['k8smaster'][2]}}:2379
+  - https://{{ groups['etcd'][0]}}:2379
+  - https://{{ groups['etcd'][1]}}:2379
+  - https://{{ groups['etcd'][2]}}:2379
   caFile: /etc/etcd/ca.pem
   certFile: /etc/etcd/kubernetes.pem
   keyFile: /etc/etcd/kubernetes-key.pem

@@ -21,37 +21,32 @@
     with_fileglob:
       -  "{{ nfs_dir }}/*.pem"
 
+
   - name: ETCD > check if we need to download ETCD
     stat:
       path: /usr/local/bin/etcd
-    register: etcd_sym
+    register: etcd_installed
 
-  - name: ETCD > Download and Extract ETCD Binaries to /tmp
+  - name: ETCD > Downloadind ETCD Binaries if not already downloaded
     unarchive:
       src: https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz
-      dest: /tmp/
+      dest: "{{ download_dir }}/"
       remote_src: yes
     register: etcd_extracted
-    when: etcd_sym.stat.islnk is not defined
+    when: etcd_installed.stat.exists == False
 
-  - name: ETCD > Move ETCD Binaries to /usr/bin/local
+  - name: ETCD > Move ETCD Binaries to /usr/local/bin
     copy:
-      src: "{{ item }}"
-      dest: /usr/local/bin/
+      remote_src: yes
+      src: "{{ download_dir }}/etcd-v3.3.9-linux-amd64/{{ item.src }}"
+      dest: "/usr/local/bin/{{ item.dest }}"
       owner: root
       group: root
-    when: etcd_extracted.changed and etcd_sym.stat.islnk is not defined
-    with_fileglob:
-      -  /tmp/etcd-v3.3.9-linux-amd64
-
-  - name: ETCD > Create symbolic link to etcd binary
-    file:
-      src: "{{ item.src }}"
-      dest:  "{{ item.dest }}"
-      state: link
+      mode: u+x
     with_items:
-      - { src: /usr/local/bin/etcd-v3.3.9-linux-amd64/etcd, dest: /usr/local/bin/etcd  }
-      - { src: /usr/local/bin/etcd-v3.3.9-linux-amd64/etcdctl, dest: /usr/local/bin/etcdctl }
+      - { src: etcd, dest: etcd  }
+      - { src: etcdctl, dest: etcdctl }
+    when: etcd_extracted.changed
 
   - name: ETCD > Configure ETCD Systemd
     template:

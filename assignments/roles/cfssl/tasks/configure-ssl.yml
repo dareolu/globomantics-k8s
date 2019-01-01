@@ -65,7 +65,7 @@
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=ca-config.json \
-            -hostname={{ groups['k8smaster'][0]}},{{ groups['k8smaster'][1]}},{{ groups['k8smaster'][2]}},{{ groups['management'][0]}},127.0.0.1,kubernetes.default \
+            -hostname={{ groups['etcd'][0]}},{{ groups['etcd'][1]}},{{ groups['etcd'][2]}},{{ groups['management'][0]}},127.0.0.1,kubernetes.default \
             -profile=kubernetes etcd-k8s-csr.json | \
             cfssljson -bare kubernetes && touch  etcd_cert_and_private_key_created && chmod -R 0777  "{{ cfssl_dir }}"
     args:

@@ -6,9 +6,9 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStart=/usr/local/bin/etcd \
-{% for node in kubernetes_masters  %}
-{% if hostvars[inventory_hostname]['ansible_enp0s8']['ipv4']['address'] == node.master_ip  %}
-  --name {{ node.master_ip }} \
+{% for node in etcd_nodes  %}
+{% if hostvars[inventory_hostname]['ansible_enp0s8']['ipv4']['address'] == node.etcd_ip  %}
+  --name {{ node.etcd_ip }} \
   --cert-file=/etc/etcd/kubernetes.pem \
   --key-file=/etc/etcd/kubernetes-key.pem \
   --peer-cert-file=/etc/etcd/kubernetes.pem \
@@ -17,14 +17,14 @@ ExecStart=/usr/local/bin/etcd \
   --peer-trusted-ca-file=/etc/etcd/ca.pem \
   --peer-client-cert-auth \
   --client-cert-auth \
-  --initial-advertise-peer-urls https://{{ node.master_ip }}:2380 \
-  --listen-peer-urls https://{{ node.master_ip }}:2380 \
-  --listen-client-urls https://{{ node.master_ip }}:2379,http://127.0.0.1:2379 \
-  --advertise-client-urls https://{{ node.master_ip }}:2379 \
+  --initial-advertise-peer-urls https://{{ node.etcd_ip }}:2380 \
+  --listen-peer-urls https://{{ node.etcd_ip }}:2380 \
+  --listen-client-urls https://{{ node.etcd_ip }}:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls https://{{ node.etcd_ip }}:2379 \
   --initial-cluster-token etcd-cluster-0 \
 {% endif %}
 {% endfor %}
-  --initial-cluster {{ groups['k8smaster'][0]}}=https://{{ groups['k8smaster'][0]}}:2380,{{ groups['k8smaster'][1]}}=https://{{ groups['k8smaster'][1]}}:2380,{{ groups['k8smaster'][2]}}=https://{{ groups['k8smaster'][2]}}:2380  \
+  --initial-cluster {{ groups['etcd'][0]}}=https://{{ groups['etcd'][0]}}:2380,{{ groups['etcd'][1]}}=https://{{ groups['etcd'][1]}}:2380,{{ groups['etcd'][2]}}=https://{{ groups['etcd'][2]}}:2380  \
   --initial-cluster-state new \
   --data-dir=/var/lib/etcd
 Restart=on-failure

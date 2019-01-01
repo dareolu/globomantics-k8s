@@ -7,7 +7,12 @@
 {% for node in kubernetes_workers  %}
 {{ node.worker_ip }} {{ node.worker_name }} {{ infra_domain }}.{{ node.worker_name }} {{ infra_domain }}.{{ node.worker_name }}.io
 {% endfor %}
+{% for node in etcd_nodes  %}
+{{ node.etcd_ip }} {{ node.etcd_name }} {{ infra_domain }}.{{ node.etcd_name }} {{ infra_domain }}.{{ node.etcd_name }}.io
+{% endfor %}
 {{ groups['haproxy'][0]}} haproxy {{ infra_domain }}.haproxy {{ infra_domain }}.haproxy.io
 {{ groups['nginx'][0]}} nginx {{ infra_domain }}.nginx {{ infra_domain }}.nginx.io
 {{ groups['management'][0]}} k8s-hmrc-management {{ infra_domain }}.k8s-hmrc-management {{ infra_domain }}.k8s-hmrc-management.io
 # END ANSIBLE MANAGED BLOCK
+
+etcd_nodes

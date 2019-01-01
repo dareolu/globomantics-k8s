@@ -30,6 +30,14 @@ kubernetes_workers:
     worker_ip: "{{ groups['k8sworker'][2]}}"
   - worker_name: "k8s-{{ worker_base_name }}3"
     worker_ip: "{{ groups['k8sworker'][2]}}"
+etcd_nodes:
+  - etcd_name: "k8s-{{ master_base_name }}4"
+    etcd_ip: "{{ groups['etcd'][0]}}"
+  - etcd_name: "k8s-{{ master_base_name }}5"
+    etcd_ip: "{{ groups['etcd'][1]}}"
+  - etcd_name: "k8s-{{ master_base_name }}6"
+    etcd_ip: "{{ groups['etcd'][2]}}"
+
 
 # Kubernetes Spcific vars
 k8s_pod_subnet: '192.168.2.0/24'
