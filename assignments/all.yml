@@ -20,5 +20,5 @@
   - hosts: k8smaster
     become: yes
     roles:
-      - kube-stack
       - etcd
+      - kube-stack

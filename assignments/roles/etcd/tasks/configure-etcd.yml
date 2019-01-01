@@ -61,8 +61,13 @@
       owner: root
       group: root
     notify: start_up_etcd
-  #
-  #     #   - name: Insert a line at the end of a file.
-  #     # lineinfile:
-  #     #   path: /Users/mdtutorials2/Documents/Ansible/line.txt
-  #     #   line: last
+
+  - name: ETCD > Export ETCDCTL environment variables
+    lineinfile:
+      path: /etc/profile
+      line: |
+          export ETCDCTL_API=3
+          export ETCDCTL_ENDPOINTS="https://{{ hostvars[inventory_hostname]['ansible_enp0s8']['ipv4']['address']}}:2379"
+          export ETCDCTL_CACERT="/etc/etcd/ca.pem"
+          export ETCDCTL_CERT="/etc/etcd/kubernetes.pem"
+          export ETCDCTL_KEY="/etc/etcd/kubernetes-key.pem"

@@ -1,0 +1,21 @@
+apiVersion: kubeadm.k8s.io/v1alpha3
+kind: InitConfiguration
+api:
+  advertiseAddress: {{ hostvars[inventory_hostname]['ansible_enp0s8']['ipv4']['address']}}
+etcd:
+  endpoints:
+  - https://{{ groups['k8smaster'][0]}}:2379
+  - https://{{ groups['k8smaster'][1]}}:2379
+  - https://{{ groups['k8smaster'][2]}}:2379
+  caFile: /etc/etcd/ca.pem
+  certFile: /etc/etcd/kubernetes.pem
+  keyFile: /etc/etcd/kubernetes-key.pem
+networking:
+  podSubnet: {{ k8s_pod_subnet }}
+apiServerCertSANs:
+- {{ groups['haproxy'][0]}}
+- {{ groups['k8smaster'][0]}}
+- {{ groups['k8smaster'][1]}}
+- {{ groups['k8smaster'][2]}}
+apiServerExtraArgs:
+  apiserver-count: "3"

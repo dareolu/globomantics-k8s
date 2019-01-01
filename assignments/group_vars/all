@@ -1,6 +1,7 @@
 # Common directories
 base_opt: "/opt"
 download_dir: "{{ base_opt }}/downloads"
+k8s_dir: "{{ base_opt }}/kubernetes"
 cfssl_dir: "/etc/ssl/cfssl"
 nfs_dir: "/var/nfs/general"
 etcd_dir: "/etc/etcd"
@@ -10,7 +11,8 @@ etcd_lib_dir: "/var/lib/etcd"
 infra_user: 'root'
 infra_group: 'root'
 
-#Infrastructure > Server names and IP
+#Infrastructure
+
 master_base_name: 'hmrc-masternode'
 worker_base_name: 'hmrc-workernode'
 infra_domain: 'globomantic'
@@ -28,3 +30,6 @@ kubernetes_workers:
     worker_ip: "{{ groups['k8sworker'][2]}}"
   - worker_name: "k8s-{{ worker_base_name }}3"
     worker_ip: "{{ groups['k8sworker'][2]}}"
+
+# Kubernetes Spcific vars
+k8s_pod_subnet: '192.168.2.0/24'
